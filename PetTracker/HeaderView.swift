@@ -14,7 +14,7 @@ struct HeaderView: View {
 
     var body: some View {
         ZStack{
-            VStack(alignment: .leading){
+            VStack(){
                 HStack(){
                     Text("Left")
                         .padding(.leading)
@@ -22,12 +22,13 @@ struct HeaderView: View {
                     Text("Right")
                         .padding(.trailing)
                     }
+                .padding(.bottom)
                     
-                }
-                
             }
+            .background(.blue)
+        }
             Spacer()
         }
-    }
+}
 
 
