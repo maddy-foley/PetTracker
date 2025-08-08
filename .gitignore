@@ -1,0 +1,41 @@
+# Xcode
+.DS_Store
+xcuserdata/
+DerivedData/
+build/
+*.pbxuser
+*.mode1v3
+*.xcuserstate
+*.xcworkspace/contents.xcworkspacedata
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+*.xctestplan
+*.dSYM
+*.ipa
+*.app
+*.o
+*.lo
+*.la
+*.so
+*.dylib
+
+# Swift Package Manager
+.swiftpm/
+Package.resolved
+
+# CocoaPods (if used)
+Pods/
+Podfile.lock
+
+# Carthage (if used)
+Carthage/
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift
+*.swiftdoc
+*.swiftmodule
+*.swiftpackage
