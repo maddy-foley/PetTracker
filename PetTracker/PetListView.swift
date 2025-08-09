@@ -1,20 +1,19 @@
 //
-//  HeaderView.swift
+//  PetListView.swift
 //  PetTracker
 //
-//  Created by Maddy Foley on 8/8/25.
+//  Created by Maddy Foley on 8/9/25.
 //
 
 import SwiftUI
 
 
-struct HeaderView: View {
+struct PetListView: View {
     @Environment(\.modelContext) private var modelContext
 
 
     var body: some View {
+        Text("Pet List")
         
     }
 }
-
-
