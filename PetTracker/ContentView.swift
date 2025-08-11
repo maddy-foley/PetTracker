@@ -10,11 +10,11 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @Query private var pets: [Pet]
 
     var body: some View {
-        HeaderView()
-        
+//        HeaderView()
+//        
         FooterView()
     }
 
@@ -22,5 +22,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+        .modelContainer(for: Pet.self, inMemory: true)
 }
