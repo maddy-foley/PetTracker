@@ -23,10 +23,10 @@ struct FooterView: View {
                     // set up nav bar
                     TabView{
                         
-                        HomeView()
-                            .tabItem{
-                                Label("Home", systemImage: "house.fill")
-                            }
+//                        HomeView()
+//                            .tabItem{
+//                                Label("Home", systemImage: "house.fill")
+//                            }
                         PetListView()
                             .tabItem{
                                 Label("Pets", systemImage: "pawprint.fill")

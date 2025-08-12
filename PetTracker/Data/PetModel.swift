@@ -13,13 +13,15 @@ import SwiftData
 
 // potential to add: vaccines, owner, walks/travel and custom_caretaking category (likes, grooming, routine, etc)
 @Model
-final class Pet {
+final class Pet: Identifiable {
+    @Attribute(.unique) var id: UUID
     var name: String
     var species: String
     
     var weight: Float?
     
     init(name: String, species: String, weight: Float?) {
+        self.id = UUID()
         self.name = name
         self.species = species
         self.weight = weight
