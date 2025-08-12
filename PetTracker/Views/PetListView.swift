@@ -16,10 +16,10 @@ struct PetListView: View {
     
     var body: some View {
         VStack{
+            Button(action: addPet) {
+                Label("Add Pet", systemImage: "plus")
+            }
             if pets.isEmpty{
-                Button(action: addPet) {
-                    Label("Add Pet", systemImage: "plus")
-                }
                 Text("You have no pets added.")
                 
             } else {

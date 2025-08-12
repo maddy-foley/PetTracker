@@ -27,14 +27,16 @@ struct FooterView: View {
 //                            .tabItem{
 //                                Label("Home", systemImage: "house.fill")
 //                            }
-                        PetListView()
-                            .tabItem{
-                                Label("Pets", systemImage: "pawprint.fill")
-                            }
-                        AccountView()
-                            .tabItem{
-                                Label("Account", systemImage: "person.crop.circle.fill")
-                            }
+
+                            PetListView()
+                                .tabItem{
+                                    Label("Pets", systemImage: "pawprint.fill")
+                                }
+                            AccountView()
+                                .tabItem{
+                                    Label("Account", systemImage: "person.crop.circle.fill")
+                                }
+                        
 ////                            .badge(2)
 //
 //

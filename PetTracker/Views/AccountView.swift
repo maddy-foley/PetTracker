@@ -13,7 +13,33 @@ struct AccountView: View {
 
 
     var body: some View {
-        Text("Account")
-        
+        ZStack{
+            VStack{
+                HStack(alignment: .top){
+                    Image("person")
+                        .resizable()
+                        .frame(width: 190, height: 170, alignment: .topLeading)
+                        .clipShape(Circle())
+                        .overlay(
+                            Circle()
+                                .stroke(Color.blue, lineWidth: 7)
+                        )
+                    Spacer()
+                    Button(action: editAccount) {
+                        Label("Edit", systemImage: "pencil")
+                    }
+                }
+                Spacer()
+            }
+            .padding()
+        }
     }
+    
+    private func editAccount(){
+    }
+}
+
+#Preview {
+    AccountView()
+        .modelContainer(for: Pet.self, inMemory: true)
 }
