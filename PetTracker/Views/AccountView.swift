@@ -16,22 +16,19 @@ struct AccountView: View {
         ZStack{
             VStack{
                 HStack(alignment: .top){
-                    Image("person")
+                    Image(systemName: "person.circle")
                         .resizable()
-                        .frame(width: 190, height: 170, alignment: .topLeading)
-                        .clipShape(Circle())
-                        .overlay(
-                            Circle()
-                                .stroke(Color.blue, lineWidth: 7)
-                        )
+                        .frame(width: 170, height: 170, alignment: .topLeading)
                     Spacer()
                     Button(action: editAccount) {
                         Label("Edit", systemImage: "pencil")
                     }
                 }
+                Divider()
                 Spacer()
             }
             .padding()
+
         }
     }
     

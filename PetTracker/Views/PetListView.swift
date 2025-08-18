@@ -47,7 +47,7 @@ struct PetListView: View {
     //FIX example input
     private func addPet(){
         withAnimation{
-            let newPet = Pet(name: "Totoro", species: "dog", weight: 6.0)
+            let newPet = Pet(name: "Totoro", species: "dog")
             modelContext.insert(newPet)
         }
     }

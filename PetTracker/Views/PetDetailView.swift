@@ -12,13 +12,63 @@ import SwiftData
 struct PetDetailView: View {
     @Environment(\.modelContext) private var modelContext
     var pet: Pet
-    
-    
+
+  
+
     var body: some View {
-        HStack{
-            Text("pet view")
+      
+        ZStack{
+            VStack{
+                HStack{
+                    Image(systemName: "pawprint.circle")
+                        .resizable()
+                        .frame(width: 170, height: 170, alignment: .topLeading)
+                    Spacer()
+                    VStack(alignment: .trailing){
+                        
+                        
+                        Button(action: editPet) {
+                            Label("Edit", systemImage: "pencil")
+                        }
+                        Text("")
+                        Label(pet.name, systemImage: "female")
+                            .font(.title)
+                            .padding(.top)
+                        Text(pet.species)
+                        Text(pet.name)
+                        
+                        Text(pet.birthday.formatted(date: .long, time: .omitted))
+                    }
+                    
+                    
+                }
+                Divider()
+             
+                VStack{
+                    if ((pet.weight) != nil){
+                        Text("Weight: ")
+                        Text(pet.weight ?? 0.0, format: .number)
+                    }
+                    
+               }
+                    
+                    Spacer()
+                }
+                .padding()
+            }
+            .padding()
+            
         }
-        
+            
+    
+    
+    private func editPet(){
         
     }
+}
+
+#Preview {
+    
+    PetDetailView(pet: Pet(name: "Totoro", species: "dog"))
+        .modelContainer(for: Pet.self, inMemory: true)
 }
