@@ -52,18 +52,17 @@ struct PetDetailEditView: View {
         }
        
             Button("Save") {
-                withAnimation {
-                    savePet()
-                }
+                do {
+                   try modelContext.save()
+               } catch {
+                   print("Error saving context: \(error)")
+               }
+                
             }
         
     
     }
     
-    func savePet(){
-        PetDetailView(pet: pet)
-    }
-
 
 }
 

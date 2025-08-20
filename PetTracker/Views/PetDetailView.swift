@@ -24,9 +24,12 @@ struct PetDetailView: View {
                     Spacer()
                     VStack(alignment: .trailing){
                         
-                        
-                        Button(action: editPet) {
+                        NavigationLink {
+                            PetDetailEditView(pet: pet)
+                        } label: {
+
                             Label("Edit", systemImage: "pencil")
+                            
                         }
                         Text("")
                         Label(pet.name, systemImage: "female")
@@ -59,7 +62,7 @@ struct PetDetailView: View {
             
     
     
-    private func editPet(){
+    private func editPet(pet: Pet){
         
     }
 }
