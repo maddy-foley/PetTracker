@@ -7,7 +7,7 @@
 import Foundation
 import SwiftData
 
-enum Gender: String, Codable, CaseIterable {
+enum Sex: String, Codable, CaseIterable {
     case unknown = "Unknown"
     case female = "Female"
     case altfemale = "Altered Female"
@@ -23,30 +23,26 @@ class Pet: Identifiable, Hashable {
     var name: String
     var species: String
     var birthday: Date
-    var breed: [String]? = []
-    var weight: Float? = -1.0
+    var weight: Double?
     var active: Bool = true
     var hide: Bool = false
-    var owners: [Owner]
-    var services: [Service] = []
+    var owners: [Person]?
+    var services: [Service]?
     var carePlan: [CarePlan]?
-    var gender: Gender = Gender.unknown
-    
-    
+    var gender: Sex = Sex.unknown
     
     // FIX
     var notes: [String] = []
     var vaccines: [String:Date] = [:]
-    var outdoor: Bool = false
+//    var outdoor: Bool = false
     
     
     
-    init(name: String, species: String, owners: [Owner]) {
+    init(name: String, species: String) {
         self.id = UUID()
         self.name = name
         self.birthday = Date()
         self.species = species
-        self.owners = owners
     }
 }
 
@@ -58,9 +54,9 @@ final class CarePlan: Identifiable {
     var type: String
     
     // if date is nil there is no specific time
-    var amount_at_time: [Float:Date?]
+    var amount_at_time: [Double:Date?]
     
-    init(name: String, type: String, amount_at_time: [Float:Date?]) {
+    init(name: String, type: String, amount_at_time: [Double:Date?]) {
         self.id = UUID()
         self.name = name
         self.type = type

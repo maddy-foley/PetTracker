@@ -14,6 +14,8 @@ class Person: Identifiable {
     @Attribute(.unique) var id: UUID
     var name: String
     var phoneNumber: String?
+    var user: Bool = true
+    var pets: [Pet]?
     
     @Relationship(deleteRule: .cascade)
     var address: Address?
@@ -26,26 +28,6 @@ class Person: Identifiable {
     }
 }
 
-
-@Model
-class Owner: Person {
-    var pets: [Pet]
-    
-    init(name: String, phoneNumber: String, pets: [Pet] = []) {
-        super.init(name: name, phoneNumber: phoneNumber)
-        self.pets = pets
-    }
-}
-
-@Model
-class User: Owner  {
-    var dateCreated: Date
-    
-    init(name: String, phoneNumber: String) {
-        super.init(name: name, phoneNumber: phoneNumber, pets: [])
-        self.dateCreated = Date()
-    }
-}
 
 @Model
 class Address: Identifiable{

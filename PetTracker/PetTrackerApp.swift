@@ -13,6 +13,9 @@ struct PetTrackerApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Pet.self,
+            Person.self,
+//            Service.self,
+//            Event.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
