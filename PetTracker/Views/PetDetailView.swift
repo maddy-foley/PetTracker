@@ -13,8 +13,6 @@ struct PetDetailView: View {
     @Environment(\.modelContext) private var modelContext
     var pet: Pet
 
-  
-
     var body: some View {
       
         ZStack{
@@ -35,7 +33,6 @@ struct PetDetailView: View {
                             .font(.title)
                             .padding(.top)
                         Text(pet.species)
-                        Text(pet.name)
                         
                         Text(pet.birthday.formatted(date: .long, time: .omitted))
                     }

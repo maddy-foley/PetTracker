@@ -35,7 +35,7 @@ struct PetListView: View {
 //                    ForEach(pets, id: \.self) { pet in
 //                        PetRowView(pet: pet)
 //                    }
-//                    .onDelete(perform: deletePet) // Optional: for deleting items
+//                    .onDelete(perform: deletePet)
                     
                 }
             }
@@ -44,7 +44,7 @@ struct PetListView: View {
        
     }
     
-    //FIX example input
+
     private func addPet(){
         withAnimation{
             let newPet = Pet(name: "Totoro", species: "dog")
