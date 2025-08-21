@@ -8,10 +8,8 @@
 import SwiftUI
 
 
-struct FooterView: View {
+struct MainView: View {
     @Environment(\.modelContext) private var modelContext
-
-//    @State private var selectedTab: Tab = .home
  
     var body: some View {
         

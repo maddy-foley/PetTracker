@@ -12,13 +12,14 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
 
     var body: some View {
-
-        FooterView()
+        NavigationView{
+            MainView()
+        }
     }
 
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: Pet.self, inMemory: true)
+        .modelContainer(for:[Pet.self,Person.self], isAutosaveEnabled: false)
 }

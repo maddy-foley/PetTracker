@@ -23,14 +23,20 @@ struct PetDetailView: View {
                         .frame(width: 170, height: 170, alignment: .topLeading)
                     Spacer()
                     VStack(alignment: .trailing){
+                       
+                            NavigationLink {
+                                
+                                PetDetailEditView( petID: pet.id,in: modelContext.container)
+                                
+                            } label: {
+                                Text("Edit")
+                                Image(systemName: "pencil")
+                                    
+                                
+                            }
+                            .foregroundStyle(Color.pink)
                         
-                        NavigationLink {
-                            PetDetailEditView(pet: pet)
-                        } label: {
-
-                            Label("Edit", systemImage: "pencil")
-                            
-                        }
+                        
                         Text("")
                         Label(pet.name, systemImage: "female")
                             .font(.title)
@@ -70,5 +76,5 @@ struct PetDetailView: View {
 #Preview {
     
     PetDetailView(pet: Pet(name: "Totoro", species: "dog"))
-        .modelContainer(for: Pet.self, inMemory: true)
+        .modelContainer(for: Pet.self, inMemory: true, isAutosaveEnabled: false)
 }

@@ -23,14 +23,13 @@ struct PetListView: View {
                 Text("You have no pets added.")
                 
             } else {
-                NavigationView{
                     List(pets) { pet in
                         NavigationLink {
                             PetDetailView(pet: pet)
                         } label: {
                             PetRowView(pet: pet)
                         }
-                    }
+                    
                     
 //                    ForEach(pets, id: \.self) { pet in
 //                        PetRowView(pet: pet)
