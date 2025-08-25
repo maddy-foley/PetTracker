@@ -13,9 +13,12 @@ struct PetDetailEditView: View {
 //    @Environment(\.modelContext) private var modelContext
     var modelContext: ModelContext
     @Bindable var pet: Pet
-//    var petID: UUID
+    @State private var isDeleting = false
+    @Environment(\.modelContext) private var OGmodelContext
     
-        init(petID: PersistentIdentifier, in container: ModelContainer) {
+//    @Environment(NavigationContext.self) private var navigationContext
+
+    init(petID: PersistentIdentifier,in container: ModelContainer) {
             modelContext = ModelContext(container)
             modelContext.autosaveEnabled = false
             pet = modelContext.model(for: petID) as! Pet
@@ -23,11 +26,7 @@ struct PetDetailEditView: View {
 
    
     
-
     @Environment(\.dismiss) private var dismiss
-
-
-//    @Environment(\.undoManager) private var undoManager
     
     var body: some View {
 
@@ -67,11 +66,16 @@ struct PetDetailEditView: View {
                 
             }
             
-        }.toolbar {
+        }
+        .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Save") {
                     try? modelContext.save()
                     dismiss()
+                    
+//                    NavigationLink(destination: PetListView)
+                
+                
                 }
             }
             ToolbarItem(placement: .cancellationAction) {
@@ -81,9 +85,25 @@ struct PetDetailEditView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-       
+        .toolbar {
+            Button { isDeleting = true } label: {
+                Label("Delete \(pet.name)", systemImage: "trash")
+                    .help("Delete this pet")
+            }.alert("Delete \(pet.name)?", isPresented: $isDeleting) {
+                Button("Yes, delete \(pet.name)", role: .destructive) {
+                    delete(pet)
+                }
+            }
+        }
     
+    }
+    private func delete(_ pet: Pet){
+        do {
+            modelContext.delete(pet)
+            try modelContext.save()
+        } catch {        }
     }
     
 
 }
+

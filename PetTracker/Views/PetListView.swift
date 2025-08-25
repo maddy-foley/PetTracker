@@ -13,35 +13,46 @@ struct PetListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var pets: [Pet]
     @State private var petList: Bool = false
+    @State private var path = NavigationPath()
+    @State private var selectedPet: Pet?
     
     var body: some View {
-        VStack{
-            Button(action: addPet) {
-                Label("Add Pet", systemImage: "plus")
-            }
-            if pets.isEmpty{
-                Text("You have no pets added.")
-                
-            } else {
+        NavigationStack(path: $path){
+            
+            VStack{
+                Button(action: addPet) {
+                    Label("Add Pet", systemImage: "plus")
+                }
+                if pets.isEmpty{
+                    Text("You have no pets added.")
+                    
+                } else {
+                    
                     List(pets) { pet in
-                        NavigationLink {
-                            PetDetailView(pet: pet)
-                        } label: {
-                            PetRowView(pet: pet)
-                        }
+                        NavigationLink(pet.name, value: pet)
+                    }
+                    .navigationDestination(for: Pet.self) { pet in
+                        PetDetailView(pet: pet)
+                    }
                     
-                    
-//                    ForEach(pets, id: \.self) { pet in
-//                        PetRowView(pet: pet)
-//                    }
-//                    .onDelete(perform: deletePet)
                     
                 }
+        
+//                NavigationStack(path: $path) {
+//                    List(pets) { pet in
+//                        NavigationLink(pet.name, value: pet.name)
+//                    }
+//                    .navigationDestination(for: Pet.self) { pet in
+//                        PetDetailView(pet: pet)
+//                    }
+//                    
+//                }
+            }
             }
         }
         
        
-    }
+    
     
 
     private func addPet(){
@@ -58,4 +69,9 @@ struct PetListView: View {
                 }
             }
         }
+}
+#Preview {
+    
+    PetListView()
+        .modelContainer(for: Pet.self, inMemory: true, isAutosaveEnabled: false)
 }

@@ -26,13 +26,11 @@ struct PetDetailView: View {
                        
                             NavigationLink {
                                 
-                                PetDetailEditView( petID: pet.id,in: modelContext.container)
+                                PetDetailEditView( petID: pet.id, in: modelContext.container)
                                 
                             } label: {
-                                Text("Edit")
-                                Image(systemName: "pencil")
-                                    
-                                
+                                Label("Edit", systemImage: "Pencil")
+//                                Image(systemName: "pencil")
                             }
                             .foregroundStyle(Color.pink)
                         

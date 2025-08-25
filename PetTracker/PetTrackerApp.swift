@@ -16,7 +16,7 @@ struct PetTrackerApp: App {
             Person.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
-
+        
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
@@ -27,10 +27,8 @@ struct PetTrackerApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-              
         }
-//        .modelContainer(sharedModelContainer)
-        .modelContainer(for:[Pet.self,Person.self], isAutosaveEnabled: false)
+        .modelContainer(sharedModelContainer)
         
     }
 }
