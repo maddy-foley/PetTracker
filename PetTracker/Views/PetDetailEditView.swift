@@ -12,6 +12,7 @@ import SwiftData
 struct PetDetailEditView: View {
 //    @Environment(\.modelContext) private var modelContext
     var modelContext: ModelContext
+    @Environment(Router.self) var router
     @Bindable var pet: Pet
     @State private var isDeleting = false
     @Environment(\.modelContext) private var OGmodelContext
@@ -71,16 +72,14 @@ struct PetDetailEditView: View {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Save") {
                     try? modelContext.save()
-                    dismiss()
-                    
-//                    NavigationLink(destination: PetListView)
-                
-                
+//                    dismiss()
+                    router.pop()
                 }
             }
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel") {
-                    dismiss()
+//                    dismiss()
+                    router.pop()
                 }
             }
         }
@@ -92,6 +91,7 @@ struct PetDetailEditView: View {
             }.alert("Delete \(pet.name)?", isPresented: $isDeleting) {
                 Button("Yes, delete \(pet.name)", role: .destructive) {
                     delete(pet)
+                    router.goBack(count: 2)
                 }
             }
         }

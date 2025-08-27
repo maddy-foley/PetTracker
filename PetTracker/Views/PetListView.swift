@@ -11,13 +11,12 @@ import SwiftData
 
 struct PetListView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(Router.self) var router
     @Query private var pets: [Pet]
     @State private var petList: Bool = false
-    @State private var path = NavigationPath()
     @State private var selectedPet: Pet?
     
     var body: some View {
-        NavigationStack(path: $path){
             
             VStack{
                 Button(action: addPet) {
@@ -29,26 +28,18 @@ struct PetListView: View {
                 } else {
                     
                     List(pets) { pet in
-                        NavigationLink(pet.name, value: pet)
+                        Button(pet.name){
+//                            .onTapGesture {
+                                router.add(to: .detail(pet: pet))
+//                            }
+                        }
+//                        NavigationLink(pet.name, value: pet)
+                           
+                           
                     }
-                    .navigationDestination(for: Pet.self) { pet in
-                        PetDetailView(pet: pet)
-                    }
-                    
-                    
                 }
-        
-//                NavigationStack(path: $path) {
-//                    List(pets) { pet in
-//                        NavigationLink(pet.name, value: pet.name)
-//                    }
-//                    .navigationDestination(for: Pet.self) { pet in
-//                        PetDetailView(pet: pet)
-//                    }
-//                    
-//                }
             }
-            }
+            
         }
         
        
@@ -70,8 +61,8 @@ struct PetListView: View {
             }
         }
 }
-#Preview {
-    
-    PetListView()
-        .modelContainer(for: Pet.self, inMemory: true, isAutosaveEnabled: false)
-}
+//#Preview {
+//    
+//    PetListView()
+//        .modelContainer(for: Pet.self, inMemory: true, isAutosaveEnabled: false)
+//}

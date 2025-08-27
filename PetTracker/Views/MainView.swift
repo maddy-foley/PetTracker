@@ -9,8 +9,10 @@ import SwiftUI
 
 
 struct MainView: View {
+    @Environment(Router.self) var router
     @Environment(\.modelContext) private var modelContext
- 
+
+    
     var body: some View {
         
         ZStack{
@@ -20,33 +22,15 @@ struct MainView: View {
                 HStack(alignment: .center){
                     // set up nav bar
                     TabView{
-                        
-//                        HomeView()
-//                            .tabItem{
-//                                Label("Home", systemImage: "house.fill")
-//                            }
-
                             PetListView()
                                 .tabItem{
                                     Label("Pets", systemImage: "pawprint.fill")
                                 }
-                            AccountView()
-                                .tabItem{
-                                    Label("Account", systemImage: "person.crop.circle.fill")
-                                }
-                        
-////                            .badge(2)
-//
-//
-//                            Tab("Pets", systemImage: "pawprint.fill") {
-//                                PetListView()
-//                            }
-//
-//
-//                            Tab("Account", systemImage: "person.crop.circle.fill") {
-//                                AccountView()
-//                            }
-////                            .badge("!")
+                            
+                                AccountView()
+                                    .tabItem{
+                                        Label("Account", systemImage: "person.crop.circle.fill")
+                                    }
                         
                         
                     }

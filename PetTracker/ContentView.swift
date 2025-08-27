@@ -10,18 +10,32 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-//    @State private var path = NavigationPath()
     @Query private var pets: [Pet]
+    @State var router = Router()
 
+    
     var body: some View {
-//        NavigationStack{
+        NavigationStack(path: $router.navigationPath){
             MainView()
+                
                 .onAppear {
-                addTestData()
-            }
-//        }
-//        .navigationTitle("Root")
+                    addTestData()
+                }.navigationDestination(for: Route.self) { route in
+                    switch route {
+                    case .home:
+                        MainView()
+                    case .detail(let pet):
+                        PetDetailView(pet: pet)
+                    case .edit(let pet):
+                        PetDetailEditView(petID: pet.id, in: modelContext.container)
+                    }
+                    
+                }
+                
+        }
+        .environment(router)
     }
+    
     
     private func addTestData() {
         if pets.isEmpty {

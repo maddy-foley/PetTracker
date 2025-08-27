@@ -11,6 +11,7 @@ import SwiftData
 
 struct PetDetailView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(Router.self) var router
     var pet: Pet
 
     var body: some View {
@@ -24,15 +25,9 @@ struct PetDetailView: View {
                     Spacer()
                     VStack(alignment: .trailing){
                        
-                            NavigationLink {
-                                
-                                PetDetailEditView( petID: pet.id, in: modelContext.container)
-                                
-                            } label: {
-                                Label("Edit", systemImage: "Pencil")
-//                                Image(systemName: "pencil")
-                            }
-                            .foregroundStyle(Color.pink)
+                        Button("Edit", systemImage: "Pencil"){
+                            router.add(to: .edit(pet: pet))
+                        }
                         
                         
                         Text("")
@@ -61,6 +56,20 @@ struct PetDetailView: View {
                 .padding()
             }
             .padding()
+            .navigationBarBackButtonHidden(true)
+                  .toolbar {
+                      ToolbarItem(placement: .navigationBarLeading) {
+                          Button {
+                              router.pop()
+                          } label: {
+                              HStack {
+                                  Image(systemName: "chevron.left") // Example custom icon
+                                  Text("Go Back") // Example custom text
+                              }
+                          }
+                      }
+                  }
+            
             
         }
             
@@ -71,8 +80,8 @@ struct PetDetailView: View {
     }
 }
 
-#Preview {
-    
-    PetDetailView(pet: Pet(name: "Totoro", species: "dog"))
-        .modelContainer(for: Pet.self, inMemory: true, isAutosaveEnabled: false)
-}
+//#Preview {
+//    
+//    PetDetailView(pet: Pet(name: "Totoro", species: "dog"))
+//        .modelContainer(for: Pet.self, inMemory: true, isAutosaveEnabled: false)
+//}
