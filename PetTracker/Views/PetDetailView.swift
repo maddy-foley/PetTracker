@@ -26,7 +26,7 @@ struct PetDetailView: View {
                     VStack(alignment: .trailing){
                        
                         Button("Edit", systemImage: "Pencil"){
-                            router.add(to: .edit(pet: pet))
+                            router.add(to: .petEdit(pet: pet))
                         }
                         
                         

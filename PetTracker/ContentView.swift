@@ -11,6 +11,7 @@ import SwiftData
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var pets: [Pet]
+    @Query private var persons: [Person]
     @State var router = Router()
 
     
@@ -22,12 +23,15 @@ struct ContentView: View {
                     addTestData()
                 }.navigationDestination(for: Route.self) { route in
                     switch route {
-                    case .home:
+                    case .homeTab:
                         MainView()
-                    case .detail(let pet):
+                    case .accountEdit(let account):
+                        AccountEditView(accountID: account.id, in: modelContext.container)
+                    case .petDetail(let pet):
                         PetDetailView(pet: pet)
-                    case .edit(let pet):
+                    case .petEdit(let pet):
                         PetDetailEditView(petID: pet.id, in: modelContext.container)
+                    
                     }
                     
                 }
@@ -43,6 +47,13 @@ struct ContentView: View {
             let newPet2 = Pet(name: "Alice", species: "Cat")
             modelContext.insert(newPet1)
             modelContext.insert(newPet2)
+            try? modelContext.save()
+        }
+        
+        if persons.isEmpty
+        {
+            let user = Person(name: "Maddy", phoneNumber: "555-666-7777")
+            modelContext.insert(user)
             try? modelContext.save()
         }
     }

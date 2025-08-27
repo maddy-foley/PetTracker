@@ -6,22 +6,32 @@
 //
 
 import SwiftUI
+import SwiftData
 
 
 struct AccountView: View {
     @Environment(\.modelContext) private var modelContext
-
+    @Environment(Router.self) var router
+    @Query(filter: #Predicate<Person>{ $0.user == true} )
+    var persons: [Person]
 
     var body: some View {
+
         ZStack{
+           
             VStack{
                 HStack(alignment: .top){
                     Image(systemName: "person.circle")
                         .resizable()
                         .frame(width: 170, height: 170, alignment: .topLeading)
                     Spacer()
-                    Button(action: editAccount) {
-                        Label("Edit", systemImage: "pencil")
+                    if persons.isEmpty{
+                        //FIX
+                    } else {
+                        Button("Edit", systemImage: "Pencil"){
+                            //FIX
+                            router.add(to: .accountEdit(account: persons.first!))
+                        }
                     }
                 }
                 Divider()
@@ -31,12 +41,5 @@ struct AccountView: View {
 
         }
     }
-    
-    private func editAccount(){
-    }
-}
 
-#Preview {
-    AccountView()
-        .modelContainer(for: Pet.self, inMemory: true)
 }

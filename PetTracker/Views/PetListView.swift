@@ -29,11 +29,8 @@ struct PetListView: View {
                     
                     List(pets) { pet in
                         Button(pet.name){
-//                            .onTapGesture {
-                                router.add(to: .detail(pet: pet))
-//                            }
+                                router.add(to: .petDetail(pet: pet))
                         }
-//                        NavigationLink(pet.name, value: pet)
                            
                            
                     }

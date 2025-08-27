@@ -10,14 +10,11 @@ import SwiftData
 
 
 struct PetDetailEditView: View {
-//    @Environment(\.modelContext) private var modelContext
     var modelContext: ModelContext
     @Environment(Router.self) var router
     @Bindable var pet: Pet
     @State private var isDeleting = false
     @Environment(\.modelContext) private var OGmodelContext
-    
-//    @Environment(NavigationContext.self) private var navigationContext
 
     init(petID: PersistentIdentifier,in container: ModelContainer) {
             modelContext = ModelContext(container)
@@ -72,13 +69,11 @@ struct PetDetailEditView: View {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Save") {
                     try? modelContext.save()
-//                    dismiss()
                     router.pop()
                 }
             }
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel") {
-//                    dismiss()
                     router.pop()
                 }
             }
