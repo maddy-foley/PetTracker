@@ -10,21 +10,10 @@ import SwiftData
 
 
 struct PetDetailEditView: View {
-    var modelContext: ModelContext
+    @Environment(\.modelContext) private var modelContext
     @Environment(Router.self) var router
     @Bindable var pet: Pet
     @State private var isDeleting = false
-    @Environment(\.modelContext) private var OGmodelContext
-
-    init(petID: PersistentIdentifier,in container: ModelContainer) {
-            modelContext = ModelContext(container)
-            modelContext.autosaveEnabled = false
-            pet = modelContext.model(for: petID) as! Pet
-        }
-
-   
-    
-    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
      
@@ -74,6 +63,7 @@ struct PetDetailEditView: View {
                     }
                     ToolbarItem(placement: .cancellationAction) {
                         Button("Cancel") {
+                            modelContext.rollback()
                             router.pop()
                         }
                     }
@@ -83,20 +73,24 @@ struct PetDetailEditView: View {
                     Button { isDeleting = true } label: {
                         Label("Delete \(pet.name)", systemImage: "trash")
                             .help("Delete this pet")
-                    }.alert("Delete \(pet.name)?", isPresented: $isDeleting) {
+                    } .alert("Delete \(pet.name)?", isPresented: $isDeleting) {
                         Button("Yes, delete \(pet.name)", role: .destructive) {
                             delete(pet)
-                            router.goBack(count: 2)
                         }
                     }
-   
+            
         }
     }
     private func delete(_ pet: Pet){
         do {
             modelContext.delete(pet)
             try modelContext.save()
-        } catch {        }
+            router.goBack(count: 2)
+
+        } catch {
+            modelContext.rollback()
+            router.goBack(count: 1)
+        }
     }
     
 

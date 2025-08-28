@@ -26,12 +26,12 @@ struct MainView: View {
                                 .tabItem{
                                     Label("Pets", systemImage: "pawprint.fill")
                                 }
-                            
+                      
                                 AccountView()
                                     .tabItem{
                                         Label("Account", systemImage: "person.crop.circle.fill")
                                     }
-                        
+                         
                         
                     }
                     

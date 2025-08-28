@@ -19,29 +19,30 @@ struct AccountView: View {
     var persons: [Person]
 
     var body: some View {
-
-        ZStack{
-           
-            VStack{
-                HStack(alignment: .top){
-                    Image(systemName: "person.circle")
-                        .resizable()
-                        .frame(width: 170, height: 170, alignment: .topLeading)
-                    Spacer()
-                    if persons.isEmpty{
-                        //FIX
-                        Text("Empty")
-                    } else {
-                        Button("Edit", systemImage: "Pencil"){
-                            router.add(to: .accountEdit(account: persons.first!))
+        ScrollView{
+            ZStack{
+                
+                VStack{
+                    HStack(alignment: .top){
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .frame(width: 170, height: 170, alignment: .topLeading)
+                        Spacer()
+                        if persons.isEmpty{
+                            //FIX
+                            Text("Empty")
+                        } else {
+                            Button("Edit", systemImage: "Pencil"){
+                                router.add(to: .accountEdit(account: persons.first!))
+                            }
                         }
                     }
+                    Divider()
+                    Spacer()
                 }
-                Divider()
-                Spacer()
+                .padding()
+                
             }
-            .padding()
-
         }
     }
 

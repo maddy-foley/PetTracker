@@ -15,41 +15,41 @@ struct PetDetailView: View {
     var pet: Pet
 
     var body: some View {
-      
-        ZStack{
-            VStack{
-                HStack{
-                    Image(systemName: "pawprint.circle")
-                        .resizable()
-                        .frame(width: 170, height: 170, alignment: .topLeading)
-                    Spacer()
-                    VStack(alignment: .trailing){
-                       
-                        Button("Edit", systemImage: "Pencil"){
-                            router.add(to: .petEdit(pet: pet))
+        ScrollView{
+            ZStack{
+                VStack{
+                    HStack{
+                        Image(systemName: "pawprint.circle")
+                            .resizable()
+                            .frame(width: 170, height: 170, alignment: .topLeading)
+                        Spacer()
+                        VStack(alignment: .trailing){
+                            
+                            Button("Edit", systemImage: "Pencil"){
+                                router.add(to: .petEdit(pet: pet))
+                            }
+                            
+                            
+                            Text("")
+                            Label(pet.name, systemImage: "female")
+                                .font(.title)
+                                .padding(.top)
+                            Text(pet.species)
+                            
+                            Text(pet.birthday.formatted(date: .long, time: .omitted))
                         }
                         
                         
-                        Text("")
-                        Label(pet.name, systemImage: "female")
-                            .font(.title)
-                            .padding(.top)
-                        Text(pet.species)
+                    }
+                    Divider()
+                    
+                    VStack{
+                        if ((pet.weight) != nil){
+                            Text("Weight: ")
+                            Text(pet.weight ?? 0.0, format: .number)
+                        }
                         
-                        Text(pet.birthday.formatted(date: .long, time: .omitted))
                     }
-                    
-                    
-                }
-                Divider()
-             
-                VStack{
-                    if ((pet.weight) != nil){
-                        Text("Weight: ")
-                        Text(pet.weight ?? 0.0, format: .number)
-                    }
-                    
-               }
                     
                     Spacer()
                 }
@@ -57,21 +57,22 @@ struct PetDetailView: View {
             }
             .padding()
             .navigationBarBackButtonHidden(true)
-                  .toolbar {
-                      ToolbarItem(placement: .navigationBarLeading) {
-                          Button {
-                              router.pop()
-                          } label: {
-                              HStack {
-                                  Image(systemName: "chevron.left")
-                                  Text("Go Back")
-                              }
-                          }
-                      }
-                  }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        router.pop()
+                    } label: {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                            Text("Go Back")
+                        }
+                    }
+                }
+            }
             
             
         }
+    }
             
     
     

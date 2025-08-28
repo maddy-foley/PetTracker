@@ -30,9 +30,10 @@ struct ContentView: View {
                     case .petDetail(let pet):
                         PetDetailView(pet: pet)
                     case .petEdit(let pet):
-                        PetDetailEditView(petID: pet.id, in: modelContext.container)
+                        PetDetailEditView(pet: pet)
+                    case .errorDetail(let errorWrapper):
+                        ErrorView(errorWrapper: errorWrapper)
                     }
-                    
                 }
             
         }

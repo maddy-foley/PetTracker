@@ -17,28 +17,28 @@ struct PetListView: View {
     @State private var selectedPet: Pet?
     
     var body: some View {
-            
-            VStack{
-                Button(action: addPet) {
-                    Label("Add Pet", systemImage: "plus")
-                }
-                if pets.isEmpty{
-                    Text("You have no pets added.")
-                    
-                } else {
-                    
-                    List(pets) { pet in
-                        Button(pet.name){
+
+                VStack{
+                    Button(action: addPet) {
+                        Label("Add Pet", systemImage: "plus")
+                    }
+                    if pets.isEmpty{
+                        Text("You have no pets added.")
+                        
+                    } else {
+                        
+                        List(pets) { pet in
+                            Button(pet.name){
                                 router.add(to: .petDetail(pet: pet))
+                            }
+                            
+                            
                         }
-                           
-                           
                     }
                 }
             }
-            
-        }
         
+    
        
     
     
