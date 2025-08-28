@@ -20,29 +20,22 @@ enum Route: Hashable, Identifiable{
 @Observable
 class Router{
     var navigationPath = NavigationPath()
-    var arrPath:[String] = []
     
     func add(to route: Route){
-        arrPath.append(String(route.id.hashValue))
         navigationPath.append(route)
     }
-    func stringPath() -> String {
-        return arrPath.joined(separator: "/")
-    }
+
     
     func pop() {
-        arrPath.popLast()
         navigationPath.removeLast()
     }
     
     func goBack(count: Int){
         for _ in 1...count {
-            arrPath.popLast()
             navigationPath.removeLast()
         }
     }
     func reset() {
-        arrPath = []
         navigationPath = NavigationPath()
     }
 }

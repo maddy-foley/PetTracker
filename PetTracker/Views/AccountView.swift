@@ -12,6 +12,9 @@ import SwiftData
 struct AccountView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(Router.self) var router
+    
+    // MAYBE FIX see below:
+    // (person.first)
     @Query(filter: #Predicate<Person>{ $0.user == true} )
     var persons: [Person]
 
@@ -27,9 +30,9 @@ struct AccountView: View {
                     Spacer()
                     if persons.isEmpty{
                         //FIX
+                        Text("Empty")
                     } else {
                         Button("Edit", systemImage: "Pencil"){
-                            //FIX
                             router.add(to: .accountEdit(account: persons.first!))
                         }
                     }

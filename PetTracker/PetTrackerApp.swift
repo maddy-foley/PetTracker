@@ -14,6 +14,7 @@ struct PetTrackerApp: App {
         let schema = Schema([
             Pet.self,
             Person.self,
+            Address.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         

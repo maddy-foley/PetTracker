@@ -63,8 +63,8 @@ struct PetDetailView: View {
                               router.pop()
                           } label: {
                               HStack {
-                                  Image(systemName: "chevron.left") // Example custom icon
-                                  Text("Go Back") // Example custom text
+                                  Image(systemName: "chevron.left")
+                                  Text("Go Back")
                               }
                           }
                       }

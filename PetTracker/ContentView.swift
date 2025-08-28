@@ -13,29 +13,28 @@ struct ContentView: View {
     @Query private var pets: [Pet]
     @Query private var persons: [Person]
     @State var router = Router()
-
+    
     
     var body: some View {
         NavigationStack(path: $router.navigationPath){
             MainView()
-                
                 .onAppear {
                     addTestData()
-                }.navigationDestination(for: Route.self) { route in
+                }
+                .navigationDestination(for: Route.self) { route in
                     switch route {
                     case .homeTab:
                         MainView()
                     case .accountEdit(let account):
-                        AccountEditView(accountID: account.id, in: modelContext.container)
+                        AccountEditView(account: account)
                     case .petDetail(let pet):
                         PetDetailView(pet: pet)
                     case .petEdit(let pet):
                         PetDetailEditView(petID: pet.id, in: modelContext.container)
-                    
                     }
                     
                 }
-                
+            
         }
         .environment(router)
     }
@@ -52,15 +51,29 @@ struct ContentView: View {
         
         if persons.isEmpty
         {
-            let user = Person(name: "Maddy", phoneNumber: "555-666-7777")
+            let user = Person(firstName: "Maddy", phoneNumber: "555-666-7777", address: nil)
             modelContext.insert(user)
             try? modelContext.save()
         }
     }
-
+    
 }
 
 #Preview {
+    var sharedModelContainer: ModelContainer = {
+        let schema = Schema([
+            Pet.self,
+            Person.self,
+            Address.self
+        ])
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+        
+        do {
+            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+        } catch {
+            fatalError("Could not create ModelContainer: \(error)")
+        }
+    }()
     ContentView()
-        .modelContainer(for:[Pet.self,Person.self], isAutosaveEnabled: false)
+        .modelContainer(sharedModelContainer)
 }
