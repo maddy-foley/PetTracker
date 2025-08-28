@@ -25,13 +25,8 @@ class Router{
     func add(to route: Route){
         navigationPath.append(route)
     }
-
     
-    func pop() {
-        navigationPath.removeLast()
-    }
-    
-    func goBack(count: Int){
+    func pop(count: Int = 1){
         for _ in 1...count {
             navigationPath.removeLast()
         }

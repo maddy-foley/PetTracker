@@ -44,7 +44,7 @@ struct PetDetailEditView: View {
                             }
                         }
                         Section("Sex"){
-                            Picker("Sex", selection: $pet.gender){
+                            Picker("Sex", selection: $pet.sex){
                                 ForEach(Sex.allCases, id: \.self) { sex in
                                     Text(sex.rawValue)
                                 }
@@ -85,11 +85,12 @@ struct PetDetailEditView: View {
         do {
             modelContext.delete(pet)
             try modelContext.save()
-            router.goBack(count: 2)
+            router.pop(count: 2)
 
         } catch {
             modelContext.rollback()
-            router.goBack(count: 1)
+            router.pop(count: 1)
+            router.add(to: .errorDetail(errorWrapper: ErrorWrapper(error: CustomError.deletionFailed, guidance: "Failed")))
         }
     }
     

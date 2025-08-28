@@ -29,7 +29,7 @@ class Pet: Identifiable, Hashable {
     var owners: [Person]?
     var services: [Service]?
     var carePlan: [CarePlan]?
-    var gender: Sex = Sex.unknown
+    var sex: Sex = Sex.unknown
     
     // FIX
     var notes: [String] = []
@@ -43,6 +43,15 @@ class Pet: Identifiable, Hashable {
         self.name = name
         self.birthday = Date()
         self.species = species
+    }
+    
+    init(name: String, species: String, birthday: Date, owners: [Person], sex: Sex){
+        self.id = UUID()
+        self.name = name
+        self.species = species
+        self.birthday = birthday
+        self.owners? = owners
+        self.sex = sex
     }
 }
 

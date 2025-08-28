@@ -27,10 +27,10 @@ struct ErrorWrapper: Identifiable, Hashable {
 
 struct ErrorView: View {
     let errorWrapper: ErrorWrapper
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
+    @Environment(Router.self) var router
     
     var body: some View {
-        NavigationStack {
             VStack {
                 Text("An error has occurred!")
                     .font(.title)
@@ -40,20 +40,19 @@ struct ErrorView: View {
                 Text(errorWrapper.guidance)
                     .font(.caption)
                     .padding(.top)
-                Spacer()
             }
             .padding()
             .background(.ultraThinMaterial)
             .cornerRadius(16)
+        
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Dismiss") {
-                        dismiss()
+                        router.pop(count: 1)
                     }
                 }
             }
         }
-    }
 }
 enum CustomError: Error {
     case deletionFailed
