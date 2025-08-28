@@ -13,7 +13,7 @@ struct PetDetailView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(Router.self) var router
     var pet: Pet
-
+    
     var body: some View {
         ScrollView{
             ZStack{
@@ -73,7 +73,7 @@ struct PetDetailView: View {
             
         }
     }
-            
+    
     
     
     private func editPet(pet: Pet){

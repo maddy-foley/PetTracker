@@ -42,20 +42,25 @@ struct ContentView: View {
     
     
     private func addTestData() {
+        
+        let user = Person(firstName: "Maddy", phoneNumber: "555-666-7777", address: nil)
+        if persons.isEmpty
+        {
+            modelContext.insert(user)
+            try? modelContext.save()
+        }
+        let newPet3 = Pet(name: "Rudy", species: "Cat", birthday: Date(), owners: [user],sex: Sex.altmale)
         if pets.isEmpty {
             let newPet1 = Pet(name: "Totoro", species: "Dog")
             let newPet2 = Pet(name: "Alice", species: "Cat")
             modelContext.insert(newPet1)
             modelContext.insert(newPet2)
             try? modelContext.save()
-        }
-        
-        if persons.isEmpty
-        {
-            let user = Person(firstName: "Maddy", phoneNumber: "555-666-7777", address: nil)
-            modelContext.insert(user)
+            modelContext.insert(newPet3)
             try? modelContext.save()
         }
+        
+        
     }
     
 }

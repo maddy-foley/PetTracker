@@ -26,9 +26,9 @@ class Pet: Identifiable, Hashable {
     var weight: Double?
     var active: Bool = true
     var hide: Bool = false
-    var owners: [Person]?
-    var services: [Service]?
-    var carePlan: [CarePlan]?
+    var owners: [Person] = []
+    var services: [Service] = []
+    var carePlan: [CarePlan] = []
     var sex: Sex = Sex.unknown
     
     // FIX
@@ -50,7 +50,7 @@ class Pet: Identifiable, Hashable {
         self.name = name
         self.species = species
         self.birthday = birthday
-        self.owners? = owners
+        self.owners = owners
         self.sex = sex
     }
 }
