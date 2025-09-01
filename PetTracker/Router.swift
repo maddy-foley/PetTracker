@@ -13,7 +13,6 @@ enum Route: Hashable, Identifiable{
     case accountEdit(account: Person)
     case petDetail(pet: Pet)
     case petEdit(pet: Pet)
-    case errorDetail(errorWrapper: ErrorWrapper)
     
     var id: Self {self}
 }
@@ -26,7 +25,7 @@ class Router{
         navigationPath.append(route)
     }
     
-    func pop(count: Int = 1){
+    func pop(_ count: Int = 1){
         for _ in 1...count {
             navigationPath.removeLast()
         }
@@ -35,3 +34,4 @@ class Router{
         navigationPath = NavigationPath()
     }
 }
+

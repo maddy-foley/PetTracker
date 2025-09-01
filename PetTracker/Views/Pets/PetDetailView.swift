@@ -34,7 +34,7 @@ struct PetDetailView: View {
                             Label(pet.name, systemImage: "female")
                                 .font(.title)
                                 .padding(.top)
-                            Text(pet.species)
+//                            Text(pet.species)
                             
                             Text(pet.birthday.formatted(date: .long, time: .omitted))
                         }

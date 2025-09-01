@@ -31,7 +31,8 @@ struct PetTrackerApp: App {
         let container = try! ModelContainer(for: Schema([
             Pet.self,
             Person.self,
-            Address.self
+            Address.self,
+            Species.self
         ]))
         container.mainContext.autosaveEnabled = false
         return container
@@ -47,3 +48,4 @@ struct PetTrackerApp: App {
     }
     
 }
+

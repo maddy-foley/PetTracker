@@ -41,8 +41,9 @@ struct AccountView: View {
                         Spacer()
                     }
                     .padding()
-                    
+                  
                 }
+                
             }
         }
     }

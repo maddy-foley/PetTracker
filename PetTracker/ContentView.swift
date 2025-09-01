@@ -12,6 +12,7 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var pets: [Pet]
     @Query private var persons: [Person]
+    @Query private var species: [Species]
     @State var router = Router()
     
     
@@ -31,8 +32,6 @@ struct ContentView: View {
                         PetDetailView(pet: pet)
                     case .petEdit(let pet):
                         PetDetailEditView(pet: pet)
-                    case .errorDetail(let errorWrapper):
-                        ErrorView(errorWrapper: errorWrapper)
                     }
                 }
             
@@ -49,17 +48,23 @@ struct ContentView: View {
             modelContext.insert(user)
             try? modelContext.save()
         }
-        let newPet3 = Pet(name: "Rudy", species: "Cat", birthday: Date(), owners: [user],sex: Sex.altmale)
+        let cat = Species(name: "Cat", systemImage: "cat.circle.fill")
+        let dog = Species(name: "Dog", systemImage: "dog.circle.fill")
+       
         if pets.isEmpty {
-            let newPet1 = Pet(name: "Totoro", species: "Dog")
-            let newPet2 = Pet(name: "Alice", species: "Cat")
-            modelContext.insert(newPet1)
-            modelContext.insert(newPet2)
-            try? modelContext.save()
-            modelContext.insert(newPet3)
-            try? modelContext.save()
+            if species.isEmpty{
+                modelContext.insert(cat)
+                modelContext.insert(dog)
+                try? modelContext.save()
+            }
+                let newPet1 = Pet(name: "Totoro", species: dog)
+                let newPet2 = Pet(name: "Alice", species: cat)
+                let newPet3 = Pet(name: "Rudy", species: cat , birthday: Date(), owners: [user],sex: Sex.altmale)
+                modelContext.insert(newPet1)
+                modelContext.insert(newPet2)
+                modelContext.insert(newPet3)
+                try? modelContext.save()
         }
-        
         
     }
     
@@ -70,7 +75,8 @@ struct ContentView: View {
         let schema = Schema([
             Pet.self,
             Person.self,
-            Address.self
+            Address.self,
+            Species.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         

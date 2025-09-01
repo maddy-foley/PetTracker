@@ -24,15 +24,27 @@ struct PetListView: View {
             }
             if pets.isEmpty{
                 Text("You have no pets added.")
-                
             } else {
-                
-                List(pets) { pet in
-                    Button(pet.name){
+                ForEach(pets) {pet in
+                    // convert later Fix
+                    Button {
                         router.add(to: .petDetail(pet: pet))
+                    } label: {
+                        Image(systemName: pet.species.systemImage)
+                            .resizable()
+                            .frame(width: 100, height: 100, alignment: .topLeading)
+                            .overlay(
+                                Text(pet.name)
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(
+                                        Color.black.opacity(0.7))
+                                    .frame(width: 170)
+                                , alignment: .bottom
+                            )
+                            
                     }
-                    
-                    
                 }
             }
         }
@@ -40,10 +52,10 @@ struct PetListView: View {
     
     
     private func addPet(){
-        withAnimation{
-            let newPet = Pet(name: "Totoro", species: "dog")
-            modelContext.insert(newPet)
-        }
+//        withAnimation{
+//            let newPet = Pet(name: "Totoro", species: "dog")
+//            modelContext.insert(newPet)
+//        }
     }
     
     private func deletePet(offsets: IndexSet) {

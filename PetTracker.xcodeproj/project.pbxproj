@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		00CE83BD2E468C50008D7345 /* PetTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0070DDDF2E664E5300E1E1C4 /* PetTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -33,16 +33,8 @@
 			isa = PBXGroup;
 			children = (
 				00CE83BF2E468C50008D7345 /* PetTracker */,
-				00CE83BE2E468C50008D7345 /* Products */,
+				0070DDDF2E664E5300E1E1C4 /* PetTracker.app */,
 			);
-			sourceTree = "<group>";
-		};
-		00CE83BE2E468C50008D7345 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				00CE83BD2E468C50008D7345 /* PetTracker.app */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -67,7 +59,7 @@
 			packageProductDependencies = (
 			);
 			productName = PetTracker;
-			productReference = 00CE83BD2E468C50008D7345 /* PetTracker.app */;
+			productReference = 0070DDDF2E664E5300E1E1C4 /* PetTracker.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -95,7 +87,7 @@
 			mainGroup = 00CE83B42E468C50008D7345;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 00CE83BE2E468C50008D7345 /* Products */;
+			productRefGroup = 00CE83B42E468C50008D7345;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (

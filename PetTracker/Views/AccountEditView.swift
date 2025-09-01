@@ -13,42 +13,48 @@ struct AccountEditView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(Router.self) var router
     @Bindable var account: Person
+    @State var deletionConfirmed = false
     
     var body: some View {
-        Form{
-            Section("First Name"){
-                TextField("Last Name", text: $account.firstName)
-                    .disableAutocorrection(true)
+        ZStack{
+            VStack{
+                Form{
+                    Section("First Name"){
+                        TextField("Last Name", text: $account.firstName)
+                            .disableAutocorrection(true)
+                    }
+                    Section("Last Name"){
+                        TextField("Last Name", text: $account.lastName)
+                            .disableAutocorrection(true)
+                    }
+                    Section("Phone Number"){
+                        TextField("Phone Number", text: $account.phoneNumber)
+                            .keyboardType(.phonePad)
+                    }
+                    Section("Email"){
+                        TextField("Email", text: $account.email)
+                            .keyboardType(.emailAddress)
+                    }
+                    Section("Street"){
+                        TextField("Street", text: $account.address.street)
+                    }
+                    Section("City"){
+                        TextField("City", text: $account.address.city)
+                    }
+                    Section("Zip Code"){
+                        TextField("Zip Code", text: $account.address.zip)
+                            .keyboardType(.decimalPad)
+                    }
+                    Section("State"){
+                        TextField("State", text: $account.address.state)
+                    }
+                    
+                }
             }
-            Section("Last Name"){
-                TextField("Last Name", text: $account.lastName)
-                    .disableAutocorrection(true)
-            }
-            Section("Phone Number"){
-                TextField("Phone Number", text: $account.phoneNumber)
-                    .keyboardType(.phonePad)
-            }
-            Section("Email"){
-                TextField("Email", text: $account.email)
-                    .keyboardType(.emailAddress)
-            }
-            Section("Street"){
-                TextField("Street", text: $account.address.street)
-            }
-            Section("City"){
-                TextField("City", text: $account.address.city)
-            }
-            Section("Zip Code"){
-                TextField("Zip Code", text: $account.address.zip)
-                    .keyboardType(.decimalPad)
-            }
-            Section("State"){
-                TextField("State", text: $account.address.state)
-            }
-            
         }
-        
+        EditButtonView(deletionConfirmed: $deletionConfirmed)
     }
+   
     //        .toolbar {
     //            ToolbarItem(placement: .confirmationAction) {
     //                Button("Save") {
