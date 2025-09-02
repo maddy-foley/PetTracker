@@ -13,7 +13,7 @@ struct AccountEditView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(Router.self) var router
     @Bindable var account: Person
-    @State var deletionConfirmed = false
+    @State var isConfirmed = false
     
     var body: some View {
         ZStack{
@@ -52,7 +52,7 @@ struct AccountEditView: View {
                 }
             }
         }
-        EditButtonView(deletionConfirmed: $deletionConfirmed)
+        EditButtonView(isConfirmed: $isConfirmed)
     }
    
     //        .toolbar {

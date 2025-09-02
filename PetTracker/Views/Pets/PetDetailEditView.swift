@@ -13,11 +13,10 @@ struct PetDetailEditView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(Router.self) var router
     @Bindable var pet: Pet
-    @State var deletionConfirmed = false
+    @State var isConfirmed = false
     
     var body: some View {
         VStack{
-            
             Form{
                 Section("Name"){
                     TextField("Name", text: $pet.name)
@@ -52,25 +51,30 @@ struct PetDetailEditView: View {
             
             
         }
+        // pet deletion confirmation prompt (message, submit button, role)
+        let popUpWrapper = PopUpWrapper("Delete \(pet.name)? (Cannot be Undone).", confirmationButtonText: "Delete", .deletion)
         
-        EditButtonView(includeDelete: true, deletionConfirmed: $deletionConfirmed, title: "Delete \(pet.name)? (Cannot be Undone).")
-            .onChange(of: deletionConfirmed) {
-                delete(pet: pet)
-        }
+        //edit buttons
+        EditButtonView(isConfirmed: $isConfirmed, popUpWrapper: popUpWrapper)
+            .onChange(of: isConfirmed) {
+                delete(pet)
+            }
     }
     
-    
-    func delete(pet: Pet){
+    private func delete(_ pet: Pet){
         do {
             modelContext.delete(pet)
             try modelContext.save()
+            
+            // goes back to pet list
             router.pop(2)
+            
         } catch {
             modelContext.rollback()
+            
+            // goes back to pet's profile
             router.pop()
         }
     }
-    
-    
 }
 

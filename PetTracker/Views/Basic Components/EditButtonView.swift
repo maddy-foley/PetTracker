@@ -1,5 +1,5 @@
 //
-//  PopUpView.swift
+//  EditButtonView.swift
 //  PetTracker
 //
 //  Created by Maddy Foley on 8/30/25.
@@ -13,53 +13,54 @@ import SwiftData
 
 struct EditButtonView: View {
     @Environment(\.modelContext) private var modelContext
-    @State var isDeleting = false
-    @State var includeDelete = false
-    @Binding var deletionConfirmed: Bool
-    @State var title: String?
+    @Binding var isConfirmed: Bool
+    @State var isConfirming: Bool = false
+    var popUpWrapper: PopUpWrapper?
     @Environment(\.dismiss) private var dismiss
     
-
+    
     
     var body: some View {
-            ZStack{
-                VStack(alignment: .trailing){
-                    if includeDelete == true {
-                        Button { isDeleting = true } label: {
-                            Label("Delete", systemImage: "trash")
-                                .help("Delete this pet")
+        ZStack{
+            VStack(alignment: .trailing){
+                
+                if (popUpWrapper != nil) {
+                    switch popUpWrapper!.buttonType {
+                    case .deletion:
+                        Button("Delete", systemImage: "trash") {
+                            isConfirming = true
                         }
-                        .alert(title!, isPresented: $isDeleting) {
-                            Button("Yes, delete") {
-                                deletionConfirmed = true
+                        .confirmationDialog("Delete", isPresented: $isConfirming){
+                            Button(popUpWrapper!.message, role: .destructive){
+                                isConfirmed = true
                             }
                         }
-                        
                     }
+                    
+                } else {
+                    Text("Nope")
                 }
-                
             }
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
-                        try? modelContext.save()
-                        dismiss()
-                    }
+            
+        }
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Save") {
+                    try? modelContext.save()
+                    dismiss()
                 }
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
-                        modelContext.rollback()
-                        dismiss()
-                    }
+            }
+            ToolbarItem(placement: .cancellationAction) {
+                Button("Cancel") {
+                    modelContext.rollback()
+                    dismiss()
                 }
             }
         }
-     
-        
+    }
+    
+    
     
 }
-//
-//#Preview {
-//    ButtonView()
-//}
+
