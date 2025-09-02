@@ -13,6 +13,7 @@ enum Route: Hashable, Identifiable{
     case accountEdit(account: Person)
     case petDetail(pet: Pet)
     case petEdit(pet: Pet)
+    case petList
     
     var id: Self {self}
 }

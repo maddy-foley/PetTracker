@@ -25,7 +25,6 @@ struct EditButtonView: View {
             VStack(alignment: .trailing){
                 
                 if (popUpWrapper != nil) {
-                    
                     //switch statement for potential future confirmation handling
                     switch popUpWrapper!.buttonType {
                     case .deletion:

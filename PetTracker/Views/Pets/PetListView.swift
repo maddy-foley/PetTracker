@@ -12,71 +12,58 @@ import SwiftData
 struct PetListView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(Router.self) var router
-    @Query private var pets: [Pet]
+    @Query(sort: \Species.name) private var species: [Species]
     @State private var petList: Bool = false
+    @State private var isEditing: Bool = false
     @State private var selectedPet: Pet?
+    @State private var isConfirmed = false
     
     var body: some View {
-        
-        VStack{
-            Button(action: addPet) {
-                Label("Add Pet", systemImage: "plus")
-            }
-            if pets.isEmpty{
-                Text("You have no pets added.")
-            } else {
-                ForEach(pets) {pet in
-                    // convert later Fix
-                    
-                        
-                        Button {
-                            router.add(to: .petDetail(pet: pet))
-                        } label: {
-                                Image(systemName: pet.species.systemImage)
-                                    .resizable()
-                            
-                            // FIX SIZING
-                                    .frame(width: 100, height: 100, alignment: .topLeading)
-                                    .zIndex(0)
-                                    .padding()
-                                    .overlay(
-                                        Text(pet.name)
-                                            .foregroundStyle(.white)
-                                            .font(.headline)
-                                            .padding()
-                                            .frame(width: .infinity, height: 100, alignment: .bottomLeading)
-                                            .background(
-                                                Circle()
-                                                    .trim(from: 0.0, to: 0.5)
-                                                   .fill(Color.black.opacity(0.5))
-                                                   .frame(width: 100, height: 100)
-                                            )
-                                    )
-                                    
-                                
-//                                Rectangle()
-//                                    .fill(Color.black.opacity(0.7))
-//                                    .zIndex(1)
-//                                    .frame(width: 100, height: 30)
-                    
-                    
-                            //                            .overlay(
-                            //                                Text(pet.name)
-                            //                                    .font(.headline)
-                            //                                    .foregroundColor(.white)
-                            //                                    .padding()
-                            //                                    .background(
-                            //                                        Color.black.opacity(0.7))
-                            //
-                            //                                , alignment: .bottom
-                            //
-                            //                            )
-                            //                            .clipShape(Circle())
-                        
+        ZStack(alignment: .topLeading){
+            HStack{
+                if isEditing{
+                    Button("Cancel"){
+                        modelContext.rollback()
+                        isEditing = false
+                    }
+                    Spacer()
+                    Button("Save"){
+                        try? modelContext.save()
+                        isEditing = false
+                    }
+                } else {
+                    Spacer()
+                    Button("Edit", systemImage: "pencil"){
+                        isEditing = true
                     }
                 }
             }
+            .padding()
+            VStack{
+                if species.isEmpty{
+                    Text("You have no pets added.")
+                } else {
+                    
+                    //FIX CHECK
+                    LazyVStack{
+                        ForEach(species, id: \.self){specie in
+                            Text(specie.name)
+                                .font(.title)
+                            Divider()
+                            ScrollView(.horizontal){
+                                LazyHStack{
+                                    ForEach(specie.pets, id: \.self) {pet in
+                                        PetRowView(pet: pet)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                Spacer()
+            }
         }
+        
     }
     
     
@@ -86,17 +73,40 @@ struct PetListView: View {
         //            modelContext.insert(newPet)
         //        }
     }
+}
+
+
+struct PetRowView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Environment(Router.self) private var router
+    @State var pet: Pet
     
-    private func deletePet(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(pets[index])
-            }
+    var body: some View {
+        Button {
+            router.add(to: .petDetail(pet: pet))
+        } label: {
+            Image(systemName: pet.species.systemImage)
+                .resizable()
+                .frame(width: 100, height: 100, alignment: .topLeading)
+                .zIndex(0)
+                .padding()
+                .overlay(
+                    Text(pet.name)
+                        .foregroundStyle(.white)
+                        .font(.headline)
+                        .padding()
+                        .frame(width: .infinity, height: 100, alignment: .bottomLeading)
+                        .background(
+                            Circle()
+                                .trim(from: 0.0, to: 0.5)
+                                .fill(Color.black.opacity(0.5))
+                                .frame(width: 100, height: 100)
+                        )
+                )
+            
+            
+            
+            
         }
     }
 }
-//#Preview {
-//
-//    PetListView()
-//        .modelContainer(for: Pet.self, inMemory: true, isAutosaveEnabled: false)
-//}

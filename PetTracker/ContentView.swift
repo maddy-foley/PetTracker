@@ -18,20 +18,22 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack(path: $router.navigationPath){
-            MainView()
+            MainNavView()
                 .onAppear {
                     addTestData()
                 }
                 .navigationDestination(for: Route.self) { route in
                     switch route {
                     case .homeTab:
-                        MainView()
+                        MainNavView()
                     case .accountEdit(let account):
                         AccountEditView(account: account)
                     case .petDetail(let pet):
                         PetDetailView(pet: pet)
                     case .petEdit(let pet):
                         PetDetailEditView(pet: pet)
+                    case .petList:
+                        PetListView()
                     }
                 }
             
@@ -63,6 +65,9 @@ struct ContentView: View {
                 modelContext.insert(newPet1)
                 modelContext.insert(newPet2)
                 modelContext.insert(newPet3)
+            cat.pets.append(newPet2)
+            cat.pets.append(newPet3)
+            dog.pets.append(newPet1)
                 try? modelContext.save()
         }
         

@@ -30,6 +30,7 @@ class Species: Identifiable, Hashable {
         self.name = name
         self.systemImage = systemImage
     }
+    
 }
 
 @Model
@@ -66,6 +67,7 @@ class Pet: Identifiable, Hashable {
         self.sex = sex
         self.species = species
     }
+    
 }
 
 
