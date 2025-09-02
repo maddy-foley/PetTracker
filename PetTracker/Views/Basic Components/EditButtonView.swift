@@ -25,11 +25,14 @@ struct EditButtonView: View {
             VStack(alignment: .trailing){
                 
                 if (popUpWrapper != nil) {
+                    
+                    //switch statement for potential future confirmation handling
                     switch popUpWrapper!.buttonType {
                     case .deletion:
                         Button("Delete", systemImage: "trash") {
                             isConfirming = true
                         }
+                        .help("Delete")
                         .confirmationDialog("Delete", isPresented: $isConfirming){
                             Button(popUpWrapper!.message, role: .destructive){
                                 isConfirmed = true
@@ -37,8 +40,6 @@ struct EditButtonView: View {
                         }
                     }
                     
-                } else {
-                    Text("Nope")
                 }
             }
             

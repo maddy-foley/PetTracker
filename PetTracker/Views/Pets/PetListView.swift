@@ -27,23 +27,52 @@ struct PetListView: View {
             } else {
                 ForEach(pets) {pet in
                     // convert later Fix
-                    Button {
-                        router.add(to: .petDetail(pet: pet))
-                    } label: {
-                        Image(systemName: pet.species.systemImage)
-                            .resizable()
-                            .frame(width: 100, height: 100, alignment: .topLeading)
-                            .overlay(
-                                Text(pet.name)
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                                    .padding()
-                                    .background(
-                                        Color.black.opacity(0.7))
-                                    .frame(width: 170)
-                                , alignment: .bottom
-                            )
+                    
+                        
+                        Button {
+                            router.add(to: .petDetail(pet: pet))
+                        } label: {
+                                Image(systemName: pet.species.systemImage)
+                                    .resizable()
                             
+                            // FIX SIZING
+                                    .frame(width: 100, height: 100, alignment: .topLeading)
+                                    .zIndex(0)
+                                    .padding()
+                                    .overlay(
+                                        Text(pet.name)
+                                            .foregroundStyle(.white)
+                                            .font(.headline)
+                                            .padding()
+                                            .frame(width: .infinity, height: 100, alignment: .bottomLeading)
+                                            .background(
+                                                Circle()
+                                                    .trim(from: 0.0, to: 0.5)
+                                                   .fill(Color.black.opacity(0.5))
+                                                   .frame(width: 100, height: 100)
+                                            )
+                                    )
+                                    
+                                
+//                                Rectangle()
+//                                    .fill(Color.black.opacity(0.7))
+//                                    .zIndex(1)
+//                                    .frame(width: 100, height: 30)
+                    
+                    
+                            //                            .overlay(
+                            //                                Text(pet.name)
+                            //                                    .font(.headline)
+                            //                                    .foregroundColor(.white)
+                            //                                    .padding()
+                            //                                    .background(
+                            //                                        Color.black.opacity(0.7))
+                            //
+                            //                                , alignment: .bottom
+                            //
+                            //                            )
+                            //                            .clipShape(Circle())
+                        
                     }
                 }
             }
@@ -52,10 +81,10 @@ struct PetListView: View {
     
     
     private func addPet(){
-//        withAnimation{
-//            let newPet = Pet(name: "Totoro", species: "dog")
-//            modelContext.insert(newPet)
-//        }
+        //        withAnimation{
+        //            let newPet = Pet(name: "Totoro", species: "dog")
+        //            modelContext.insert(newPet)
+        //        }
     }
     
     private func deletePet(offsets: IndexSet) {
