@@ -24,7 +24,6 @@ struct AccountView: View {
         } else {
             ScrollView{
                 ZStack{
-                    
                     VStack{
                         HStack(alignment: .top){
                             Image(systemName: "person.circle")
@@ -41,7 +40,6 @@ struct AccountView: View {
                         Spacer()
                     }
                     .padding()
-                  
                 }
                 
             }

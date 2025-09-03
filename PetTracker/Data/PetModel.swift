@@ -17,7 +17,7 @@ enum Sex: String, Codable, CaseIterable {
 
 
 @Model
-class Species: Identifiable, Hashable {
+class Specie: Identifiable, Hashable {
     @Attribute(.unique) var id: UUID
     @Attribute(.unique) var name: String
     var systemImage: String
@@ -46,26 +46,26 @@ class Pet: Identifiable, Hashable {
     var services: [Service] = []
     var carePlan: [CarePlan] = []
     var sex: Sex = Sex.unknown
-    var species: Species
+    var specie: Specie
 
     var notes: [String] = []
     
     
     
-    init(name: String, species: Species) {
+    init(name: String, specie: Specie) {
         self.id = UUID()
         self.name = name
         self.birthday = Date()
-        self.species = species
+        self.specie = specie
     }
     
-    init(name: String, species: Species, birthday: Date, owners: [Person], sex: Sex){
+    init(name: String, specie: Specie, birthday: Date, owners: [Person], sex: Sex){
         self.id = UUID()
         self.name = name
         self.birthday = birthday
         self.owners = owners
         self.sex = sex
-        self.species = species
+        self.specie = specie
     }
     
 }

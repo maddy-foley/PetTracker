@@ -82,6 +82,6 @@ struct PetDetailView: View {
 
 //#Preview {
 //    
-//    PetDetailView(pet: Pet(name: "Totoro", species: "dog"))
+//    PetDetailView(pet: Pet(name: "Totoro", : "dog"))
 //        .modelContainer(for: Pet.self, inMemory: true, isAutosaveEnabled: false)
 //}

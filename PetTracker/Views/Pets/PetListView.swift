@@ -12,7 +12,7 @@ import SwiftData
 struct PetListView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(Router.self) var router
-    @Query(sort: \Species.name) private var species: [Species]
+    @Query(sort: \Specie.name) private var species: [Specie]
     @State private var petList: Bool = false
     @State private var isEditing: Bool = false
     @State private var selectedPet: Pet?
@@ -21,6 +21,8 @@ struct PetListView: View {
     var body: some View {
         ZStack(alignment: .topLeading){
             HStack{
+ 
+
                 if isEditing{
                     Button("Cancel"){
                         modelContext.rollback()
@@ -55,9 +57,26 @@ struct PetListView: View {
                                     ForEach(specie.pets, id: \.self) {pet in
                                         PetRowView(pet: pet)
                                     }
+                                    if isEditing {
+                                        Button {
+                                            addPet(specie)
+                                        } label: {
+                                            Image(systemName:"plus.circle")
+                                                .resizable()
+                                                .frame(width: 100, height: 100, alignment: .topLeading)
+                                                .zIndex(0)
+                                                .padding()
+                                        }
+                                    }
                                 }
                             }
                         }
+                        if isEditing {
+                            Button("Add a ", systemImage: "plus") {
+                                add()
+                            }
+                        }
+
                     }
                 }
                 Spacer()
@@ -65,13 +84,13 @@ struct PetListView: View {
         }
         
     }
+    private func add(){
+//        router.add(to: .specieEdit)
+    }
     
-    
-    private func addPet(){
-        //        withAnimation{
-        //            let newPet = Pet(name: "Totoro", species: "dog")
-        //            modelContext.insert(newPet)
-        //        }
+    private func addPet(_ specie: Specie){
+        //initialize but do not save unless it meets the submission requirements
+//        router.add(to: .petEdit(pet: Pet( name: "", : specie: specie)))
     }
 }
 
@@ -85,7 +104,7 @@ struct PetRowView: View {
         Button {
             router.add(to: .petDetail(pet: pet))
         } label: {
-            Image(systemName: pet.species.systemImage)
+            Image(systemName: pet.specie.systemImage)
                 .resizable()
                 .frame(width: 100, height: 100, alignment: .topLeading)
                 .zIndex(0)

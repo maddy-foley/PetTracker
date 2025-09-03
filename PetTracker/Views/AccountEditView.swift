@@ -52,62 +52,20 @@ struct AccountEditView: View {
                 }
             }
         }
-        EditButtonView(isConfirmed: $isConfirmed)
-    }
-   
-    //        .toolbar {
-    //            ToolbarItem(placement: .confirmationAction) {
-    //                Button("Save") {
-    //                    try? modelContext.save()
-    //                    router.pop()
-    //                }
-    //            }
-    //            ToolbarItem(placement: .cancellationAction) {
-    //                Button("Cancel") {
-    //                    modelContext.rollback()
-    //                    router.pop()
-    //                }
-    //            }
-    //        }
-    //        .navigationBarBackButtonHidden(true)
-    //        .toolbar {
-    //            ToolbarItem(placement: .navigationBarLeading) {
-    //                Button {
-    //                    router.pop()
-    //                } label: {
-    //                    HStack {
-    //                        Image(systemName: "chevron.left")
-    //                        Text("Go Back")
-    //                    }
-    //                }
-    //            }
-    //        }
-    
-    
-    //        }
-    
-    //    }
-    
-    //        .toolbar {
-    //            Button { isDeleting = true } label: {
-    //                Label("Delete \(pet.name)", systemImage: "trash")
-    //                    .help("Delete this pet")
-    //            }.alert("Delete \(pet.name)?", isPresented: $isDeleting) {
-    //                Button("Yes, delete \(pet.name)", role: .destructive) {
-    //                    delete(pet)
-    //                    router.goBack(count: 2)
-    //                }
-    //            }
-    //        }
-    
-    //    }
-    //    private func delete(_ account: Person){
-    //        do {
-    //            modelContext.delete(person)
-    //            try modelContext.save()
-    //        } catch {        }
-    //    }
-    
-    
-    
+        .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        try? modelContext.save()
+                        router.pop()
+                    }
+                }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        modelContext.rollback()
+                        router.pop()
+                    }
+                }
+            }
+        }
 }

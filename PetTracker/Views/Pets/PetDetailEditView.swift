@@ -13,54 +13,79 @@ struct PetDetailEditView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(Router.self) var router
     @Bindable var pet: Pet
-    @State var isConfirmed = false
+    @State private var isDeleting = false
+    @State private var dialogDeleteDetail: String?
     
-    var body: some View {
-        VStack{
-            Form{
-                Section("Name"){
-                    TextField("Name", text: $pet.name)
-                        .disableAutocorrection(true)
-                }
-                Section("Birthday"){
-                    DatePicker("Date", selection: $pet.birthday, displayedComponents: .date)
-                }
-                Section("Weight"){
-                    TextField("Weight", value: $pet.weight, format: .number)
-                        .keyboardType(.decimalPad)
-                }
-                Section("Status"){
-                    Toggle(isOn: $pet.active) {
-                        Text("Active")
+    var body: some View{
+        ZStack{
+            VStack{
+                Form{
+                    Section("Name"){
+                        TextField("Name", text: $pet.name)
+                            .disableAutocorrection(true)
                     }
-                }
-                Section("Hide Pet"){
-                    Toggle(isOn: $pet.hide) {
-                        Text("Hide")
+                    Section("Birthday"){
+                        DatePicker("Date", selection: $pet.birthday, displayedComponents: .date)
                     }
-                }
-                Section("Sex"){
-                    Picker("Sex", selection: $pet.sex){
-                        ForEach(Sex.allCases, id: \.self) { sex in
-                            Text(sex.rawValue)
+                    Section("Weight"){
+                        TextField("Weight", value: $pet.weight, format: .number)
+                            .keyboardType(.decimalPad)
+                    }
+                    Section("Status"){
+                        Toggle(isOn: $pet.active) {
+                            Text("Active")
                         }
                     }
+                    Section("Hide Pet"){
+                        Toggle(isOn: $pet.hide) {
+                            Text("Hide")
+                        }
+                    }
+                    Section("Sex"){
+                        Picker("Sex", selection: $pet.sex){
+                            ForEach(Sex.allCases, id: \.self) { sex in
+                                Text(sex.rawValue)
+                            }
+                        }
+                    }
+                    
                 }
                 
             }
-            
-            
-        }
-        // pet deletion confirmation prompt (message, submit button, role)
-        let popUpWrapper = PopUpWrapper("Delete \(pet.name)? (Cannot be Undone).", confirmationButtonText: "Delete", .deletion)
-        
-        //edit buttons
-        EditButtonView(isConfirmed: $isConfirmed, popUpWrapper: popUpWrapper)
-            .onChange(of: isConfirmed) {
-                delete(pet)
+          
+        }.navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel", role:.cancel){
+                        modelContext.rollback()
+                        router.pop()
+                    }
+                    
+                }
+                ToolbarItem(placement: .confirmationAction){
+                    Button("Save") {
+                        try? modelContext.save()
+                        router.pop()
+                    }
+                }
+                ToolbarItem(placement: .bottomBar){
+                    Button("Delete", role: .destructive) {
+                        isDeleting = true
+                    }
+                    .confirmationDialog("Delete", isPresented: $isDeleting){
+                        Button("Delete \(pet.name)? (Cannot be undone.)", role: .destructive){
+                            delete(pet)
+                        }
+                        Button("Cancel", role: .cancel) {
+                            dialogDeleteDetail = nil
+                        }
+                    }
+                }
             }
-    }
     
+    }
+        
+        
     private func delete(_ pet: Pet){
         do {
             modelContext.delete(pet)
@@ -75,6 +100,7 @@ struct PetDetailEditView: View {
             // goes back to pet's profile
             router.pop()
         }
+        
     }
+    
 }
-

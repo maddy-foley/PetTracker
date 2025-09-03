@@ -16,7 +16,7 @@ struct PetTrackerApp: App {
             Pet.self,
             Person.self,
             Address.self,
-            Species.self
+            Specie.self
         ]))
         container.mainContext.autosaveEnabled = false
         return container

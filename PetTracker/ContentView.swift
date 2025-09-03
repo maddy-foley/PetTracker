@@ -12,7 +12,7 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var pets: [Pet]
     @Query private var persons: [Person]
-    @Query private var species: [Species]
+    @Query private var species: [Specie]
     @State var router = Router()
     
     
@@ -32,8 +32,8 @@ struct ContentView: View {
                         PetDetailView(pet: pet)
                     case .petEdit(let pet):
                         PetDetailEditView(pet: pet)
-                    case .petList:
-                        PetListView()
+//                    case .specieEdit(let specie):
+//                        specieEditView(specie: Specie)
                     }
                 }
             
@@ -50,8 +50,8 @@ struct ContentView: View {
             modelContext.insert(user)
             try? modelContext.save()
         }
-        let cat = Species(name: "Cat", systemImage: "cat.circle.fill")
-        let dog = Species(name: "Dog", systemImage: "dog.circle.fill")
+        let cat = Specie(name: "Cat", systemImage: "cat.circle.fill")
+        let dog = Specie(name: "Dog", systemImage: "dog.circle.fill")
        
         if pets.isEmpty {
             if species.isEmpty{
@@ -59,9 +59,9 @@ struct ContentView: View {
                 modelContext.insert(dog)
                 try? modelContext.save()
             }
-                let newPet1 = Pet(name: "Totoro", species: dog)
-                let newPet2 = Pet(name: "Alice", species: cat)
-                let newPet3 = Pet(name: "Rudy", species: cat , birthday: Date(), owners: [user],sex: Sex.altmale)
+                let newPet1 = Pet(name: "Totoro", specie: dog)
+                let newPet2 = Pet(name: "Alice", specie: cat)
+                let newPet3 = Pet(name: "Rudy", specie: cat , birthday: Date(), owners: [user],sex: Sex.altmale)
                 modelContext.insert(newPet1)
                 modelContext.insert(newPet2)
                 modelContext.insert(newPet3)
@@ -81,7 +81,7 @@ struct ContentView: View {
             Pet.self,
             Person.self,
             Address.self,
-            Species.self
+            Specie.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         
