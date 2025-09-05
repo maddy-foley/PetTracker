@@ -7,14 +7,39 @@
 
 import SwiftUI
 import SwiftData
+ 
 
 
-struct PetDetailEditView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Environment(Router.self) var router
+
+struct UpdatePet: View {
+    var modelContext: ModelContext
+    
     @Bindable var pet: Pet
-    @State private var isDeleting = false
-    @State private var dialogDeleteDetail: String?
+    
+    
+    init(petID: PersistentIdentifier, in container: ModelContainer) {
+        modelContext = ModelContext(container)
+        modelContext.autosaveEnabled = false
+        pet = modelContext.model(for: petID) as! Pet
+    }
+
+    @Environment(\.modelContext) private var OGmodelContext
+    
+    var body: some View{
+        PetDetailEditFormView(modelContext: modelContext, pet: pet)
+    }
+        
+  
+    
+}
+
+struct PetDetailEditFormView: View {
+    var modelContext: ModelContext
+    @Bindable var pet: Pet
+    @State var isNew = false
+    @State var isDeleting = false
+    @Environment(Router.self) private var router
+    @State var dialogDeleteDetail: String? = "Delete"
     
     var body: some View{
         ZStack{
@@ -53,18 +78,24 @@ struct PetDetailEditView: View {
                 
             }
           
-        }.navigationBarBackButtonHidden(true)
+        }
+        .navigationBarBackButtonHidden(true)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel", role:.cancel){
+                    Button("Cancel"){
                         modelContext.rollback()
+                    
                         router.pop()
                     }
                     
                 }
                 ToolbarItem(placement: .confirmationAction){
                     Button("Save") {
+                        if isNew{
+                            modelContext.insert(pet)
+                        }
                         try? modelContext.save()
+                        
                         router.pop()
                     }
                 }
@@ -82,25 +113,22 @@ struct PetDetailEditView: View {
                     }
                 }
             }
-    
-    }
-        
-        
-    private func delete(_ pet: Pet){
-        do {
-            modelContext.delete(pet)
-            try modelContext.save()
-            
-            // goes back to pet list
-            router.pop(2)
-            
-        } catch {
-            modelContext.rollback()
-            
-            // goes back to pet's profile
-            router.pop()
-        }
-        
     }
     
+private func delete(_ pet: Pet){
+    do {
+        modelContext.delete(pet)
+        try modelContext.save()
+        
+        // goes back to pet list
+        router.pop(2)
+        
+    } catch {
+        modelContext.rollback()
+        
+        // goes back to pet's profile
+        router.pop()
+    }
+    
+}
 }
